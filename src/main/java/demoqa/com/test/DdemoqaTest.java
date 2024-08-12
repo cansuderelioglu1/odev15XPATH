@@ -1,4 +1,5 @@
 package demoqa.com.test;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -32,16 +33,23 @@ public class DdemoqaTest {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
 
-        driver.get("https://demoqa.com/buttons");
     }
 
 
-
- @Test(priority = 0)
+    @Test(priority = 0)
     public void testDoubleClickButton() {
-        WebElement btnDoubleClick = driver.findElement(By.xpath("//button[text()=\"Double Click Me\"]"));
+
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        driver.get("https://demoqa.com/elements");
+        WebElement buttons = driver.findElement(By.xpath("/html/body/div[2]/div/div/div/div[1]/div/div/div[1]/div/ul/li[5]"));
+        js.executeScript("arguments[0].scrollIntoView(true);", buttons);
+        buttons.click();
+
+
+        WebElement btnDoubleClick = driver.findElement(By.xpath("//button[text()=\"Double Click Me\"]"));
+
         js.executeScript("arguments[0].scrollIntoView(true);", btnDoubleClick);
 
         Actions actions = new Actions(driver);
@@ -53,9 +61,18 @@ public class DdemoqaTest {
 
     @Test(priority = 1)
     public void testClickButton() {
-        WebElement btnClick = driver.findElement(By.xpath("//button[text()=\"Click Me\"]"));
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        driver.get("https://demoqa.com/elements");
+        //WebElement buttons=driver.findElement(By.xpath("//*[@id='item-4']"));
+        WebElement buttons = driver.findElement(By.xpath("/html/body/div[2]/div/div/div/div[1]/div/div/div[1]/div/ul/li[5]"));
+
+        js.executeScript("arguments[0].scrollIntoView(true);", buttons);
+        buttons.click();
+
+        WebElement btnClick = driver.findElement(By.xpath("/html/body/div[2]/div/div/div/div[2]/div[2]/div[3]/button"));
+
         js.executeScript("arguments[0].scrollIntoView(true);", btnClick);
 
         btnClick.click();
@@ -63,7 +80,7 @@ public class DdemoqaTest {
         WebElement result = driver.findElement(By.xpath("//p[@id='dynamicClickMessage']"));
         Assert.assertEquals(result.getText(), "You have done a dynamic click");
 
-        }
+    }
 
     @Test(priority = 2)
     public void testAddRecord() {
